@@ -1,38 +1,35 @@
 'use client'
-import { signIn, signOut, useSession } from 'next-auth/react'
-import Image from 'next/image'
+
+import Button from './components/Button'
+import CurrencyInput from './components/CurruncyInput'
+import DatePicker from './components/DatePicker'
+import Input from './components/Input'
+import { QuickSearch } from './components/QuickSearch'
 
 export default function Home() {
-  const { data } = useSession()
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between  p-24 ">
-      <div className="col flex">
-        <h1>Ola {data?.user?.name}</h1>
-        <Image
-          className="rounded-full"
-          src={data?.user?.image!}
-          alt=""
-          width={150}
-          height={150}
-          quality={100}
-        />
+    <main className="flex flex-col items-center justify-between pt-[106px]">
+      <div className="flex w-full flex-col items-center gap-4 bg-bg-word bg-cover bg-center bg-no-repeat px-5 pt-5 text-xl font-semibold">
+        <h1>
+          Encontre sua próxima
+          <span className="text-primaryLighter">viagem!</span>
+        </h1>
+        <div className="flex w-full flex-col gap-4">
+          <Input placeholder="Onde você quer ir?" />
+          <div className="flex gap-4">
+            <DatePicker
+              className="w-full"
+              placeholderText="Primeira data"
+              onChange={() => {
+                console.log('DATE')
+              }}
+            />
+            <CurrencyInput className="w-full" placeholder="Orçamento?" />
+          </div>
+        </div>
+        <Button>Pesquisar</Button>
       </div>
-      <button
-        onClick={() => {
-          signIn()
-        }}
-        className="rounded-xl bg-gray-400 px-4 py-3"
-      >
-        Login com Google
-      </button>
-      <button
-        onClick={() => {
-          signOut()
-        }}
-        className="rounded-xl bg-gray-400 px-4 py-3"
-      >
-        Sair
-      </button>
+      <QuickSearch />
     </main>
   )
 }
