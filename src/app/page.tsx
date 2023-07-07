@@ -1,17 +1,18 @@
 'use client'
-
+import { SyntheticEvent } from 'react'
 import Button from './components/Button'
 import CurrencyInput from './components/CurruncyInput'
 import DatePicker from './components/DatePicker'
 import Input from './components/Input'
 import { QuickSearch } from './components/QuickSearch'
+import { RecommendedTrips } from './components/RecommendedTrips'
 
 export default function Home() {
   return (
     <main className="flex flex-col items-center justify-between pt-[106px]">
       <div className="flex w-full flex-col items-center gap-4 bg-bg-word bg-cover bg-center bg-no-repeat px-5 pt-5 text-xl font-semibold">
         <h1>
-          Encontre sua próxima
+          Encontre sua próxima{' '}
           <span className="text-primaryLighter">viagem!</span>
         </h1>
         <div className="flex w-full flex-col gap-4">
@@ -20,8 +21,11 @@ export default function Home() {
             <DatePicker
               className="w-full"
               placeholderText="Primeira data"
-              onChange={() => {
-                console.log('DATE')
+              onChange={function (
+                date: Date | null,
+                event: SyntheticEvent<any, Event> | undefined,
+              ): void {
+                throw new Error('Function not implemented.')
               }}
             />
             <CurrencyInput className="w-full" placeholder="Orçamento?" />
@@ -30,6 +34,7 @@ export default function Home() {
         <Button>Pesquisar</Button>
       </div>
       <QuickSearch />
+      <RecommendedTrips />
     </main>
   )
 }

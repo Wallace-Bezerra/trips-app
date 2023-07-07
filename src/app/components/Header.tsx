@@ -18,7 +18,7 @@ export const Header = () => {
   const user = data?.user
 
   return (
-    <header className="container fixed flex h-[106px] items-center justify-between px-5 py-7">
+    <header className="container fixed z-10 flex h-[106px] items-center justify-between bg-white px-5 py-7">
       <Image src="/logo.svg" alt="Full Stack Week" width={183} height={32} />
       {status === 'unauthenticated' && (
         <button
@@ -42,6 +42,7 @@ export const Header = () => {
             className="rounded-full"
             src={user.image!}
             alt={`Usuário ${data.user?.name}`}
+            quality={100}
             width={50}
             height={50}
           />
