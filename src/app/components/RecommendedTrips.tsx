@@ -1,14 +1,19 @@
 import { Trip } from '@prisma/client'
 import { TripItem } from './TripItem'
+import { prisma } from '@/lib/prisma'
 
-export const RecommendedTrips = async () => {
-  const trips: Trip[] = await fetch('http://localhost:3000/api/trips').then(
-    (res) => res.json(),
-  )
+// const getTrip = async () => {
+//   const trips = await prisma.trip.findMany()
+//   return trips
+// }
+export async function RecommendedTrips() {
+  // const trips: Trip[] = await fetch('http://localhost:3000/api/trips').then(
+  //   (res) => res.json(),
+  // )
+  const trips: Trip[] = await prisma.trip.findMany()
 
-  // console.log(trips?.map((item: any) => item.name))
   return (
-    <div className="container mx-auto mt-5 w-full px-5">
+    <div className="container mx-auto my-5 w-full px-5">
       <h2
         className="flex w-full items-center gap-3 whitespace-nowrap text-[#717171] 
         before:block before:h-[1px] before:w-full before:max-w-[455px] before:bg-[#BBBFBF] before:content-['']
