@@ -17,6 +17,7 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
     register,
     handleSubmit,
     control,
+    watch,
     formState: { errors },
   } = useForm<TripsReservationForm>()
   console.log(errors)
@@ -24,6 +25,8 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
   const onSubmit = (data: any) => {
     console.log(data)
   }
+  const startDate = watch('startDate')
+  const endDate = watch('endDate')
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -46,6 +49,8 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
                 onChange={field.onChange}
                 onBlur={field.onBlur}
                 ref={field.ref}
+                minDate={new Date()}
+                maxDate={trip.endDate}
                 className="w-full"
                 error={!!errors.startDate}
                 errorMessage={errors.startDate?.message}
@@ -64,11 +69,15 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
             control={control}
             render={({ field }) => (
               <DatePicker
-                selected={field.value}
+                selected={startDate! > endDate! ? null : field.value}
+                value={startDate! > endDate! ? '' : undefined}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
                 ref={field.ref}
-                className="w-full"
+                disabled={!startDate}
+                className="w-full disabled:cursor-not-allowed disabled:bg-slate-100"
+                minDate={startDate || new Date()}
+                maxDate={trip.endDate}
                 error={!!errors.endDate}
                 errorMessage={errors.endDate?.message}
                 placeholderText="Data final"
