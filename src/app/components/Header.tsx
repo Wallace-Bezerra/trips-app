@@ -1,10 +1,11 @@
 'use client'
 
-import Image from 'next/image'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import { AiOutlineMenu } from 'react-icons/ai'
 import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
+import Image from 'next/image'
+import Link from 'next/link'
 
 const handleLoginClick = () => {
   signIn()
@@ -19,7 +20,9 @@ export const Header = () => {
 
   return (
     <header className="container fixed z-10 flex h-[106px] items-center justify-between bg-white px-5 py-7">
-      <Image src="/logo.svg" alt="Full Stack Week" width={183} height={32} />
+      <Link href="/">
+        <Image src="/logo.svg" alt="Full Stack Week" width={183} height={32} />
+      </Link>
       {status === 'unauthenticated' && (
         <button
           onClick={handleLoginClick}

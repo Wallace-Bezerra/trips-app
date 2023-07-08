@@ -28,7 +28,7 @@ export const TripSearch = () => {
           <CurrencyInput className="w-full" placeholder="Orçamento?" />
         </div>
       </div>
-      <Button>Pesquisar</Button>
+      <Button variant="primary">Pesquisar</Button>
     </div>
   )
 }

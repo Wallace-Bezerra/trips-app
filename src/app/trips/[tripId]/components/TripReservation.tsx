@@ -1,13 +1,13 @@
 'use client'
 import { SyntheticEvent } from 'react'
-import Button from './Button'
-import DatePicker from './DatePicker'
-import Input from './Input'
 import { Trip } from '@prisma/client'
+import Button from '@/app/components/Button'
+import DatePicker from '@/app/components/DatePicker'
+import Input from '@/app/components/Input'
 
 export const TripReservation = ({ trip }: { trip: Trip }) => {
   return (
-    <div className="container mt-5 w-full px-5">
+    <div className="container mb-10 mt-5 w-full px-5 ">
       <div className="flex w-full flex-col gap-4">
         <div className="flex gap-4">
           <DatePicker
@@ -36,11 +36,12 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
       <div className="my-5 flex justify-between">
         <p className="text-sm font-medium text-primaryDarker">
           Total (7 noites)
-          {/* {tr} */}
         </p>
         <p className="text-sm font-medium text-primaryDarker">R$2.660</p>
       </div>
-      <Button>Reservar agora</Button>
+      <div className="border-b pb-10">
+        <Button variant="primary">Reservar agora</Button>
+      </div>
     </div>
   )
 }

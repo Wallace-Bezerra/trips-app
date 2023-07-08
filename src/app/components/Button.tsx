@@ -1,9 +1,19 @@
 import { ComponentPropsWithoutRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-function Button({ className, ...props }: ComponentPropsWithoutRef<'button'>) {
+interface ButtonProps extends ComponentPropsWithoutRef<'button'> {
+  variant: 'primary' | 'outlined'
+}
+function Button({ className, variant = 'primary', ...props }: ButtonProps) {
+  const variants = {
+    primary:
+      'bg-primaryLighter font-medium text-[#fff] shadow transition-all hover:opacity-[0.8]',
+    outlined:
+      'mt-7 border border-primaryLighter bg-transparent text-sm font-semibold text-primaryLighter transition-all duration-500 hover:bg-primaryLighter hover:text-white',
+  }
   const _className = twMerge(
-    'appearance-none rounded-lg bg-primaryLighter w-full p-2 text-sm font-medium text-[#fff] shadow transition-all hover:opacity-[0.8]',
+    variants[variant],
+    'appearance-none rounded-lg  w-full p-2 text-sm',
     className,
   )
 
