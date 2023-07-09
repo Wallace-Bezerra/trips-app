@@ -11,19 +11,44 @@ interface TripsReservationForm {
   endDate: Date | null
 }
 export const TripReservation = ({ trip }: { trip: Trip }) => {
-  // const [startDate, setStartDate] = useState(new Date())
-
   const {
     register,
     handleSubmit,
     control,
     watch,
     formState: { errors },
+    setError,
   } = useForm<TripsReservationForm>()
   console.log(errors)
-  // console.log(startDate)
-  const onSubmit = (data: any) => {
-    console.log(data)
+
+  const onSubmit = async (data: TripsReservationForm) => {
+    const request = await fetch('http://localhost:3000/api/trips/check', {
+      method: 'POST',
+      body: JSON.stringify({
+        tripId: trip.id,
+        startDate: data.startDate,
+        endDate: data.endDate,
+      }),
+    })
+    const response = await request.json()
+    const error = response.error?.code
+    if (error === 'TRIP_ALREADY_RESERVED') {
+      setError('startDate', {
+        message: 'Essa Data está reservada!',
+      })
+      setError('endDate', {
+        message: 'Essa Data está reservada!',
+      })
+    }
+    if (error === 'INVALID_START_DATE')
+      setError('startDate', {
+        message: 'Data inicial inválida!',
+      })
+    if (error === 'INVALID_END_DATE') {
+      setError('endDate', {
+        message: 'Data final inválida!',
+      })
+    }
   }
   const startDate = watch('startDate')
   const endDate = watch('endDate')
@@ -53,6 +78,7 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
                 ref={field.ref}
                 minDate={new Date()}
                 maxDate={trip.endDate}
+                dateFormat="dd/MM/yyyy"
                 className="w-full"
                 error={!!errors.startDate}
                 errorMessage={errors.startDate?.message}
@@ -75,6 +101,7 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
                 value={startDate! > endDate! ? '' : undefined}
                 onChange={field.onChange}
                 onBlur={field.onBlur}
+                dateFormat="dd/MM/yyyy"
                 ref={field.ref}
                 disabled={!startDate}
                 className="w-full disabled:cursor-not-allowed disabled:bg-slate-100 "
@@ -120,8 +147,7 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
         <p className="text-sm font-medium text-primaryDarker">
           R${' '}
           {startDate && endDate && differenceInDays(endDate, startDate) > 0
-            ? differenceInDays(endDate, startDate) *
-              Number(trip.pricePerDay.toString())
+            ? differenceInDays(endDate, startDate) * +trip.pricePerDay
             : '0'}
         </p>
       </div>
