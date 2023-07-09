@@ -4,7 +4,7 @@ import Button from '@/app/components/Button'
 import DatePicker from '@/app/components/DatePicker'
 import Input from '@/app/components/Input'
 import { Controller, useForm } from 'react-hook-form'
-
+import { differenceInDays } from 'date-fns'
 interface TripsReservationForm {
   maxGuests: number
   startDate: Date | null
@@ -27,6 +27,8 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
   }
   const startDate = watch('startDate')
   const endDate = watch('endDate')
+  const date = new Date()
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -75,8 +77,11 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
                 onBlur={field.onBlur}
                 ref={field.ref}
                 disabled={!startDate}
-                className="w-full disabled:cursor-not-allowed disabled:bg-slate-100"
-                minDate={startDate || new Date()}
+                className="w-full disabled:cursor-not-allowed disabled:bg-slate-100 "
+                minDate={
+                  new Date(date.setDate(startDate?.getDate()! + 1)) ||
+                  new Date()
+                }
                 maxDate={trip.endDate}
                 error={!!errors.endDate}
                 errorMessage={errors.endDate?.message}
@@ -106,9 +111,19 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
       </div>
       <div className="my-5 flex justify-between">
         <p className="text-sm font-medium text-primaryDarker">
-          Total (7 noites)
+          Total{' ('}
+          {startDate && endDate && differenceInDays(endDate, startDate) > 0
+            ? differenceInDays(endDate, startDate)
+            : 0}{' '}
+          noites {')'}
         </p>
-        <p className="text-sm font-medium text-primaryDarker">R$2.660</p>
+        <p className="text-sm font-medium text-primaryDarker">
+          R${' '}
+          {startDate && endDate && differenceInDays(endDate, startDate) > 0
+            ? differenceInDays(endDate, startDate) *
+              Number(trip.pricePerDay.toString())
+            : '0'}
+        </p>
       </div>
       <div className="border-b pb-10">
         <Button variant="primary">Reservar agora</Button>

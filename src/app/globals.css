@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.react-datepicker__day--selected{
+  background-color: #590BD8 !important;
+}
+.react-datepicker__day:not(.react-datepicker__day--disabled):not(.react-datepicker__day--selected):hover{
+  transition: all .4s;
+  background-color: #BE72FA !important;
+  color: white;
+  border-radius: none;
+}
+.react-datepicker__day:not(.react-datepicker__day--disabled):not(.react-datepicker__day--selected){
+@apply bg-purple-100
+}
+.react-datepicker__day--disabled{
+@apply bg-gray-50 cursor-not-allowed
+}
+.react-datepicker__day--disabled:hover{
+@apply bg-gray-50 cursor-not-allowed
+}
