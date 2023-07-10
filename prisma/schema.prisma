@@ -24,7 +24,7 @@ model Trip {
   maxGuests    Int
   reservations TripReservation[]
   countryCode  String
-  recommended   Boolean           @default(false)
+  recommended  Boolean           @default(false)
 }
 
 model TripReservation {
@@ -36,6 +36,7 @@ model TripReservation {
   startDate DateTime
   endDate   DateTime
   totalPaid Decimal  @db.Decimal(8, 2)
+  guests    Int
 }
 
 model Account {
