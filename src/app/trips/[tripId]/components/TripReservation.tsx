@@ -5,11 +5,13 @@ import DatePicker from '@/app/components/DatePicker'
 import Input from '@/app/components/Input'
 import { Controller, useForm } from 'react-hook-form'
 import { differenceInDays } from 'date-fns'
+import { useRouter } from 'next/navigation'
 interface TripsReservationForm {
-  maxGuests: number
+  guests: number
   startDate: Date | null
   endDate: Date | null
 }
+
 export const TripReservation = ({ trip }: { trip: Trip }) => {
   const {
     register,
@@ -19,7 +21,12 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
     formState: { errors },
     setError,
   } = useForm<TripsReservationForm>()
-  console.log(errors)
+  const startDate = watch('startDate')
+  const endDate = watch('endDate')
+  const date = new Date()
+  const difference = differenceInDays(endDate!, startDate!)
+
+  const router = useRouter()
 
   const onSubmit = async (data: TripsReservationForm) => {
     const request = await fetch('http://localhost:3000/api/trips/check', {
@@ -36,23 +43,28 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
       setError('startDate', {
         message: 'Essa Data está reservada!',
       })
-      setError('endDate', {
+      return setError('endDate', {
         message: 'Essa Data está reservada!',
       })
     }
     if (error === 'INVALID_START_DATE')
-      setError('startDate', {
+      return setError('startDate', {
         message: 'Data inicial inválida!',
       })
     if (error === 'INVALID_END_DATE') {
-      setError('endDate', {
+      return setError('endDate', {
         message: 'Data final inválida!',
       })
     }
+    // router.push(`/trips/${trip.id}/confirmation`)
+    router.push(
+      `/trips/${trip.id}/confirmation?startDate=${data.startDate
+        ?.toISOString()
+        // eslint-disable-next-line prettier/prettier
+        .trim()}&endDate=${data.endDate?.toISOString().trim()}&guests=${data.guests
+      }`,
+    )
   }
-  const startDate = watch('startDate')
-  const endDate = watch('endDate')
-  const date = new Date()
 
   return (
     <form
@@ -118,7 +130,7 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
           />
         </div>
         <Input
-          {...register('maxGuests', {
+          {...register('guests', {
             required: {
               value: true,
               message: 'Número de hóspedes é obrigatório',
@@ -132,17 +144,19 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
           type="number"
           min="0"
           placeholder={`Hóspedes no maxìmo (${trip.maxGuests})`}
-          error={!!errors.maxGuests}
-          errorMessage={errors.maxGuests?.message}
+          error={!!errors.guests}
+          errorMessage={errors.guests?.message}
         />
       </div>
       <div className="my-5 flex justify-between">
         <p className="text-sm font-medium text-primaryDarker">
           Total{' ('}
-          {startDate && endDate && differenceInDays(endDate, startDate) > 0
-            ? differenceInDays(endDate, startDate)
-            : 0}{' '}
-          noites {')'}
+          {startDate && endDate && difference > 0
+            ? difference === 1
+              ? difference + ' noite'
+              : difference + ' noites'
+            : 0 + ' noite '}
+          {')'}
         </p>
         <p className="text-sm font-medium text-primaryDarker">
           R${' '}

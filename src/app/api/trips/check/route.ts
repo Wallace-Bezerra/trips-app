@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import { isAfter, isBefore } from 'date-fns'
+import { differenceInDays, isAfter, isBefore } from 'date-fns'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
@@ -14,6 +14,18 @@ export async function POST(request: NextRequest) {
       JSON.stringify({
         error: {
           code: 'TRIP_NOT_FOUND',
+        },
+      }),
+      {
+        status: 404,
+      },
+    )
+  }
+  if (req.guests > trip.maxGuests || req.guests <= 0) {
+    return new NextResponse(
+      JSON.stringify({
+        error: {
+          code: 'INVALID_NUMBER_OF_GUESTS',
         },
       }),
       {
@@ -63,11 +75,18 @@ export async function POST(request: NextRequest) {
       JSON.stringify({
         error: { code: 'TRIP_ALREADY_RESERVED' },
       }),
+      {
+        status: 400,
+      },
     )
   }
   return new NextResponse(
     JSON.stringify({
       success: true,
+      trip,
+      totalPrice:
+        differenceInDays(new Date(req.endDate), new Date(req.startDate)) *
+        Number(trip.pricePerDay),
     }),
   )
 }

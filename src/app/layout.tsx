@@ -15,7 +15,9 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-br">
-      <body className={`${poppins.className} container mx-auto`}>
+      <body
+        className={`${poppins.className} container mx-auto flex min-h-screen flex-col`}
+      >
         <NextAuthProvider>
           <Header />
           {children}
