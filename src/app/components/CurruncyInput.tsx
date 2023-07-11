@@ -1,17 +1,16 @@
 import _CurrencyInput, { CurrencyInputProps } from 'react-currency-input-field'
 import { twMerge } from 'tailwind-merge'
 
+import React, { ForwardedRef, forwardRef } from 'react'
 interface InputProps extends CurrencyInputProps {
   error?: boolean
   errorMessage?: string
 }
 
-function CurrencyInput({
-  className,
-  error,
-  errorMessage,
-  ...props
-}: InputProps) {
+function CurrencyInput(
+  { className, error, errorMessage, ...props }: InputProps,
+  ref: ForwardedRef<HTMLInputElement | null>,
+) {
   const inputClassName = twMerge(
     'rounded-lg border border-gray-300 bg-white p-2 text-sm font-normal text-dark placeholder-black placeholder-opacity-20 outline-none transition-all focus:ring-1 focus:ring-primary',
     error ? 'border-red-500' : '',
@@ -22,6 +21,7 @@ function CurrencyInput({
     <div className="flex w-full flex-col">
       <_CurrencyInput
         lang="pt-BR"
+        ref={ref}
         className={inputClassName}
         intlConfig={{ locale: 'pt-BR', currency: 'BRL' }}
         {...props}
@@ -33,4 +33,4 @@ function CurrencyInput({
   )
 }
 
-export default CurrencyInput
+export default forwardRef(CurrencyInput)

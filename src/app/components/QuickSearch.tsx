@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 export const QuickSearch = () => {
   return (
@@ -13,20 +14,40 @@ export const QuickSearch = () => {
       </h2>
       <ul className="mt-5 flex justify-between ">
         <li className="flex cursor-pointer flex-col items-center gap-[5px]">
-          <Image src="/hotel-icon.png" width={25} height={25} alt="" />
-          <p className="text-sm text-[#717171]">Hotéis</p>
+          <Link
+            className="flex flex-col items-center gap-[5px]"
+            href={`/trips/search?destination=Hotel&startDate=&budget=`}
+          >
+            <Image src="/hotel-icon.png" width={25} height={25} alt="Hotel" />
+            <p className="text-sm text-[#717171]">Hotéis</p>
+          </Link>
         </li>
         <li className="flex cursor-pointer flex-col items-center gap-[5px]">
-          <Image src="/farm-icon.png" width={25} height={25} alt="" />
-          <p className="text-sm text-[#717171]">Fazenda</p>
+          <Link
+            className="flex flex-col items-center gap-[5px]"
+            href={`/trips/search?destination=Fazenda&startDate=&budget=`}
+          >
+            <Image src="/farm-icon.png" width={25} height={25} alt="Fazenda" />
+            <p className="text-sm text-[#717171]">Fazenda</p>
+          </Link>
         </li>
         <li className="flex cursor-pointer flex-col items-center gap-[5px]">
-          <Image src="/cottage-icon.png" width={25} height={25} alt="" />
-          <p className="text-sm text-[#717171]">Chalés</p>
+          <Link
+            className="flex flex-col items-center gap-[5px]"
+            href={`/trips/search?destination=Chalé&startDate=&budget=`}
+          >
+            <Image src="/cottage-icon.png" width={25} height={25} alt="Chalé" />
+            <p className="text-sm text-[#717171]">Chalés</p>
+          </Link>
         </li>
         <li className="flex cursor-pointer flex-col items-center gap-[5px]">
-          <Image src="/inn-icon.png" width={25} height={25} alt="" />
-          <p className="text-sm text-[#717171]">Pousada</p>
+          <Link
+            className="flex flex-col items-center gap-[5px]"
+            href={`/trips/search?destination=Pousada&startDate=&budget=`}
+          >
+            <Image src="/inn-icon.png" width={25} height={25} alt="Pousada" />
+            <p className="text-sm text-[#717171]">Pousada</p>
+          </Link>
         </li>
       </ul>
     </div>
