@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
 const handleLoginClick = () => {
   signIn()
@@ -16,6 +17,7 @@ const handleLogoutClick = () => {
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { data, status } = useSession()
+  const router = useRouter()
   const user = data?.user
 
   return (
@@ -57,7 +59,15 @@ export const Header = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
               >
-                <button>Minhas Viagens</button>
+                <button
+                  onClick={() => {
+                    setIsOpen(false)
+                    router.push('/my-trips')
+                  }}
+                >
+                  Minhas Viagens
+                </button>
+
                 <button onClick={handleLogoutClick} className="self-end">
                   Sair
                 </button>

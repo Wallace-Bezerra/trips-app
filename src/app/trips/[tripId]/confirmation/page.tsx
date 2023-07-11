@@ -1,11 +1,14 @@
-/* eslint-disable prettier/prettier */
 'use client'
 
 import Button from '@/app/components/Button'
 import { Trip } from '@prisma/client'
+import { signIn, useSession } from 'next-auth/react'
+
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState, useCallback } from 'react'
 import ReactCountryFlag from 'react-country-flag'
+import { toast } from 'react-toastify'
 
 type searchParamsProps = {
   startDate: string
@@ -26,37 +29,38 @@ export default function TripConfirmation({
   const [trip, setTrip] = useState<Trip | null>(null)
   const [error, setError] = useState<any>('')
   const [totalPrice, setTotalPrice] = useState(0)
-
+  const { status, data } = useSession()
+  const router = useRouter()
+  console.log(data?.user.id)
   const getTrip = useCallback(
     async (searchParams: searchParamsProps, id: string) => {
-      try {
-        const data = await fetch('http://localhost:3000/api/trips/check', {
-          method: 'POST',
-          body: JSON.stringify({
-            startDate: new Date(searchParams.startDate.trim()),
-            endDate: new Date(searchParams.endDate.trim()),
-            guests: searchParams.guests,
-            tripId: id,
-          }),
-        })
-        const response = await data.json()
-        if (response.error) {
-          console.log(response.error.code)
-          setError(response.error.code)
-        }
-        setTrip(response.trip)
-        setTotalPrice(response.totalPrice)
-      } catch (error) {
-        console.log(error)
+      const data = await fetch('http://localhost:3000/api/trips/check', {
+        method: 'POST',
+        body: JSON.stringify({
+          startDate: searchParams.startDate,
+          endDate: searchParams.endDate,
+          guests: searchParams.guests,
+          tripId: id,
+        }),
+      })
+      const response = await data.json()
+      if (response.error) {
+        router.back()
+        console.log(response.error.code)
+        setError(response.error.code)
       }
+      setTrip(response.trip)
+      setTotalPrice(response.totalPrice)
     },
     [],
   )
 
   useEffect(() => {
+    if (status === 'unauthenticated') {
+      signIn()
+    }
     getTrip(searchParams, params.tripId)
-  }, [])
-  console.log(trip)
+  }, [status])
 
   if (!trip) {
     return (
@@ -65,7 +69,33 @@ export default function TripConfirmation({
       </div>
     )
   }
-
+  const handleBuyClick = async () => {
+    const res = await fetch('http://localhost:3000/api/trips/reservation', {
+      method: 'POST',
+      body: JSON.stringify({
+        tripId: params.tripId,
+        userId: data?.user.id,
+        startDate: searchParams.startDate,
+        endDate: searchParams.endDate,
+        totalPaid: totalPrice,
+        guests: Number(searchParams.guests),
+      }),
+    })
+    if (!res.ok) {
+      return toast.error('Ocorreu um erro!')
+    }
+    router.push('/')
+    toast.success('Reserva finalizada com sucesso!', {
+      position: 'bottom-center',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    })
+  }
   return (
     <div className="container flex w-full flex-1 flex-col gap-5 px-5 pt-28">
       <h3 className="mb-5 text-lg font-semibold text-primaryDarker">
@@ -132,7 +162,9 @@ export default function TripConfirmation({
               : `${searchParams.guests}  hóspedes`}
           </span>
         </div>
-        <Button variant="primary">Finalizar Compra</Button>
+        <Button onClick={handleBuyClick} variant="primary">
+          Finalizar Compra
+        </Button>
       </div>
     </div>
   )

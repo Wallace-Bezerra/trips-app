@@ -4,6 +4,7 @@ import { NextAuthProvider } from './providers/auth'
 import { ReactNode } from 'react'
 import { Header } from './components/Header'
 import { Footer } from './components/Footer'
+import { ToastyProvider } from './providers/toasty'
 
 const poppins = Poppins({ subsets: ['latin'], weight: ['200', '500', '600'] })
 
@@ -19,9 +20,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         className={`${poppins.className} container mx-auto flex min-h-screen flex-col`}
       >
         <NextAuthProvider>
-          <Header />
-          {children}
-          <Footer />
+          <ToastyProvider>
+            <Header />
+            {children}
+            <Footer />
+          </ToastyProvider>
         </NextAuthProvider>
       </body>
     </html>
