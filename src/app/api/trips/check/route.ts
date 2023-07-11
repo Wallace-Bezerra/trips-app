@@ -88,5 +88,8 @@ export async function POST(request: NextRequest) {
         differenceInDays(new Date(req.endDate), new Date(req.startDate)) *
         Number(trip.pricePerDay),
     }),
+    {
+      status: 200,
+    },
   )
 }
