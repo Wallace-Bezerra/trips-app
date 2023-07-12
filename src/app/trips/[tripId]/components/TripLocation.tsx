@@ -1,4 +1,3 @@
-import Button from '@/app/components/Button'
 import TripMap from './Maps/TripMap'
 
 interface TripLocationProps {
@@ -16,7 +15,6 @@ export const TripLocation = ({ address, description }: TripLocationProps) => {
         {address}
       </h3>
       <p>{description.slice(0, 200)} ...</p>
-      <Button variant="outlined">Ver no Google Maps</Button>
     </div>
   )
 }

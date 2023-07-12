@@ -2,6 +2,8 @@
 
 import Button from '@/app/components/Button'
 import { Trip } from '@prisma/client'
+import { loadStripe } from '@stripe/stripe-js'
+import { data } from 'autoprefixer'
 import { signIn, useSession } from 'next-auth/react'
 
 import Image from 'next/image'
@@ -28,13 +30,12 @@ export default function TripConfirmation({
   // const trip = console.log(searchParams)
   const [trip, setTrip] = useState<Trip | null>(null)
   const [error, setError] = useState<any>('')
-  const [totalPrice, setTotalPrice] = useState(0)
-  const { status, data } = useSession()
+  const [totalPaid, setTotaPaid] = useState(0)
+  const { status } = useSession()
   const router = useRouter()
-  console.log(data?.user.id)
   const getTrip = useCallback(
     async (searchParams: searchParamsProps, id: string) => {
-      const data = await fetch('http://localhost:3000/api/trips/check', {
+      const data = await fetch('/api/trips/check', {
         method: 'POST',
         body: JSON.stringify({
           startDate: searchParams.startDate,
@@ -50,7 +51,7 @@ export default function TripConfirmation({
         setError(response.error.code)
       }
       setTrip(response.trip)
-      setTotalPrice(response.totalPrice)
+      setTotaPaid(response.totalPaid)
     },
     [],
   )
@@ -70,21 +71,23 @@ export default function TripConfirmation({
     )
   }
   const handleBuyClick = async () => {
-    const res = await fetch('http://localhost:3000/api/trips/reservation', {
+    const res = await fetch('/api/payment', {
       method: 'POST',
       body: JSON.stringify({
         tripId: params.tripId,
-        userId: data?.user.id,
         startDate: searchParams.startDate,
         endDate: searchParams.endDate,
-        totalPaid: totalPrice,
+        totalPaid,
+        coverImage: trip.coverImage,
         guests: Number(searchParams.guests),
+        description: trip.description,
+        name: trip.name,
       }),
     })
     if (!res.ok) {
       return toast.error('Ocorreu um erro!')
     }
-    router.push('/')
+    // router.push('/')
     toast.success('Reserva finalizada com sucesso!', {
       position: 'bottom-center',
       autoClose: 5000,
@@ -95,6 +98,12 @@ export default function TripConfirmation({
       progress: undefined,
       theme: 'light',
     })
+    const { sessionId } = await res.json()
+    const stripe = await loadStripe(
+      process.env.NEXT_PUBLIC_STRIPE_KEY as string,
+    )
+    await stripe?.redirectToCheckout({ sessionId })
+    console.log(data)
   }
   return (
     <div className="container flex w-full flex-1 flex-col gap-5 px-5 pt-28">
@@ -130,7 +139,7 @@ export default function TripConfirmation({
           <div className="flex justify-between">
             <p className="text-sm font-medium text-primaryDarker">Total</p>
             <p className="text-sm font-semibold text-primaryDarker">
-              {`R$ ${totalPrice}`}
+              {`R$ ${totalPaid}`}
             </p>
           </div>
         </div>

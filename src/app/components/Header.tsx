@@ -54,7 +54,7 @@ export const Header = () => {
           <AnimatePresence>
             {isOpen && (
               <motion.div
-                className="absolute bottom-[-150px] right-0 flex h-[144px] w-[150px] flex-col items-start justify-between rounded-xl border border-solid border-[#BBBFBF] bg-[white] px-4 py-3 text-sm shadow-md"
+                className="absolute bottom-[-105px] right-0 flex h-[100px] w-[150px] flex-col items-start justify-between rounded-xl border border-solid border-[#BBBFBF] bg-[white] px-4 py-3 text-sm shadow-md"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}

@@ -19,9 +19,7 @@ export default function MyTrips() {
     if (!data?.user) {
       return
     }
-    const response = await fetch(
-      `http://localhost:3000/api/user/${data?.user.id}/reservations`,
-    )
+    const response = await fetch(`/api/user/${data?.user.id}/reservations`)
     const reservationData = await response.json()
     setReservations(reservationData)
   }
@@ -39,12 +37,9 @@ export default function MyTrips() {
   }
 
   const handleDeleteReservation = async (id: string) => {
-    const response = await fetch(
-      `http://localhost:3000/api/trips/reservation/${id}`,
-      {
-        method: 'DELETE',
-      },
-    )
+    const response = await fetch(`/api/trips/reservation/${id}`, {
+      method: 'DELETE',
+    })
     if (!response.ok) {
       return toast.error('Ocorreu um erro!')
     }

@@ -2,16 +2,8 @@ import { Trip } from '@prisma/client'
 import { TripItem } from './TripItem'
 import { prisma } from '@/lib/prisma'
 
-// const getTrip = async () => {
-//   const trips = await prisma.trip.findMany()
-//   return trips
-// }
 export async function RecommendedTrips() {
-  // const trips: Trip[] = await fetch('http://localhost:3000/api/trips').then(
-  //   (res) => res.json(),
-  // )
   const trips: Trip[] = await prisma.trip.findMany()
-
   return (
     <div className="container mx-auto my-5 w-full px-5">
       <h2

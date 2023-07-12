@@ -29,7 +29,7 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
   const router = useRouter()
 
   const onSubmit = async (data: TripsReservationForm) => {
-    const request = await fetch('http://localhost:3000/api/trips/check', {
+    const request = await fetch('/api/trips/check', {
       method: 'POST',
       body: JSON.stringify({
         tripId: trip.id,
