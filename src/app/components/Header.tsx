@@ -23,7 +23,7 @@ export const Header = () => {
   return (
     <header className="container fixed z-10 flex h-[106px] items-center justify-between bg-white px-5 py-7">
       <Link href="/">
-        <Image src="/logo.svg" alt="Full Stack Week" width={183} height={32} />
+        <Image src="/Logo.svg" alt="Full Stack Week" width={183} height={32} />
       </Link>
       {status === 'unauthenticated' && (
         <button
