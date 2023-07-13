@@ -31,15 +31,20 @@ export const TripSearch = () => {
     )
   }
   return (
-    <div className="flex w-full flex-col items-center gap-4 bg-bg-word bg-cover bg-center bg-no-repeat px-5 pt-5 text-xl font-semibold">
+    <div
+      className="flex w-full flex-col items-center gap-4 bg-bg-word bg-cover bg-center bg-no-repeat px-5 pt-5 text-xl font-semibold 
+    md:py-20
+    "
+    >
       <motion.h1
         variants={fadeIn('up', 0)}
         initial="hidden"
         animate="show"
         exit="hidden"
+        className="md:mb-5 md:text-3xl"
       >
         Encontre sua próxima{' '}
-        <span className="text-primaryLighter">viagem!</span>
+        <span className="text-primaryLighter ">viagem!</span>
       </motion.h1>
       <motion.form
         variants={fadeIn('up', 0.2)}
@@ -47,7 +52,7 @@ export const TripSearch = () => {
         animate="show"
         exit="hidden"
         onSubmit={handleSubmit(onSubimit)}
-        className="flex w-full flex-col gap-4"
+        className="flex w-full max-w-5xl flex-col gap-4 lg:flex-row"
       >
         <Input
           {...register('destination', {
@@ -57,10 +62,11 @@ export const TripSearch = () => {
             },
           })}
           error={!!errors.destination}
+          className="w-full"
           errorMessage={errors.destination?.message}
           placeholder="Onde você quer ir?"
         />
-        <div className="flex gap-4">
+        <div className="flex w-full gap-4">
           <Controller
             name="startDate"
             control={control}
@@ -86,7 +92,9 @@ export const TripSearch = () => {
             placeholder="Orçamento?"
           />
         </div>
-        <Button variant="primary">Pesquisar</Button>
+        <Button className="lg:w-1/2" variant="primary">
+          Pesquisar
+        </Button>
       </motion.form>
     </div>
   )

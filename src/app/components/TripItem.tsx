@@ -17,7 +17,7 @@ export const TripItem = ({ trip }: TripItemProps) => {
         className="flex flex-col gap-[10px]"
       >
         <Image
-          className="h-72 w-72 rounded-2xl object-cover"
+          className="h-full w-full rounded-2xl object-cover md:h-[280px] 2xl:h-[390px] "
           src={trip.coverImage}
           alt=""
           width={1470}
