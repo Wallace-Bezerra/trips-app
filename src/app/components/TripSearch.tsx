@@ -6,6 +6,8 @@ import Input from './Input'
 import DatePicker from './DatePicker'
 import { useForm, Controller } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
+import { motion } from 'framer-motion'
+import { fadeIn } from '@/animation/variants'
 
 interface TripsSearchForm {
   budget: number
@@ -30,11 +32,20 @@ export const TripSearch = () => {
   }
   return (
     <div className="flex w-full flex-col items-center gap-4 bg-bg-word bg-cover bg-center bg-no-repeat px-5 pt-5 text-xl font-semibold">
-      <h1>
+      <motion.h1
+        variants={fadeIn('up', 0)}
+        initial="hidden"
+        animate="show"
+        exit="hidden"
+      >
         Encontre sua próxima{' '}
         <span className="text-primaryLighter">viagem!</span>
-      </h1>
-      <form
+      </motion.h1>
+      <motion.form
+        variants={fadeIn('up', 0.2)}
+        initial="hidden"
+        animate="show"
+        exit="hidden"
         onSubmit={handleSubmit(onSubimit)}
         className="flex w-full flex-col gap-4"
       >
@@ -69,16 +80,6 @@ export const TripSearch = () => {
               />
             )}
           />
-          {/* <DatePicker
-            className="w-full"
-            placeholderText="Primeira data"
-            onChange={function (
-              date: Date | null,
-              event: SyntheticEvent<any, Event> | undefined,
-            ): void {
-              throw new Error('Function not implemented.')
-            }}
-          /> */}
           <CurrencyInput
             {...register('budget')}
             className="w-full"
@@ -86,7 +87,7 @@ export const TripSearch = () => {
           />
         </div>
         <Button variant="primary">Pesquisar</Button>
-      </form>
+      </motion.form>
     </div>
   )
 }

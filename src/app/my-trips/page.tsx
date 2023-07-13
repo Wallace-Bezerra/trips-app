@@ -1,6 +1,5 @@
 'use client'
 import { Trip, TripReservation } from '@prisma/client'
-// import ReactCountryFlag from 'react-country-flag'
 import Button from '../components/Button'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
@@ -8,6 +7,8 @@ import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import ReactCountryFlag from 'react-country-flag'
+import { motion } from 'framer-motion'
+import { fadeIn } from '@/animation/variants'
 
 export default function MyTrips() {
   const { status, data } = useSession()
@@ -49,10 +50,22 @@ export default function MyTrips() {
 
   return (
     <div className="container flex-1 px-5 pt-28">
-      <h3 className="container mb-5 px-5 text-lg  font-semibold text-primaryDarker">
+      <motion.h3
+        variants={fadeIn('up', 0.4)}
+        initial="hidden"
+        animate="show"
+        exit="hidden"
+        className="container mb-5 px-5 text-lg  font-semibold text-primaryDarker"
+      >
         Minhas Viagens
-      </h3>
-      <div className="container flex flex-col gap-10 px-5 pb-10">
+      </motion.h3>
+      <motion.div
+        variants={fadeIn('up', 0.4)}
+        initial="hidden"
+        animate="show"
+        exit="hidden"
+        className="container flex flex-col gap-10 px-5 pb-10"
+      >
         {reservations?.length === 0 && (
           <div>Você não possui nenhuma reserva</div>
         )}
@@ -146,7 +159,7 @@ export default function MyTrips() {
             </div>
           )
         })}
-      </div>
+      </motion.div>
     </div>
   )
 }

@@ -1,4 +1,6 @@
+'use client'
 import { Trip } from '@prisma/client'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import ReactCountryFlag from 'react-country-flag'
@@ -9,7 +11,11 @@ interface TripItemProps {
 export const TripItem = ({ trip }: TripItemProps) => {
   return (
     <Link href={`/trips/${trip.id}`}>
-      <div className="flex flex-col gap-[10px]">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="flex flex-col gap-[10px]"
+      >
         <Image
           className="h-72 w-72 rounded-2xl object-cover"
           src={trip.coverImage}
@@ -39,7 +45,7 @@ export const TripItem = ({ trip }: TripItemProps) => {
             por noite
           </p>
         </div>
-      </div>
+      </motion.div>
     </Link>
   )
 }

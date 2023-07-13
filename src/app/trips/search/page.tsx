@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 import { Trip } from '@prisma/client'
 import { TripItem } from '@/app/components/TripItem'
+import { LoadingTripItem } from '@/app/components/LoadingTripItem'
 interface TripsProps {
   searchParams: {
     budget?: string
@@ -43,6 +44,7 @@ const Trips = ({ searchParams }: TripsProps) => {
         </p>
       </div>
       {error && <div>Não foi encontrado nada!</div>}
+      {!searchTrips && !error && <LoadingTripItem />}
       {searchTrips &&
         searchTrips.map((trip) => {
           return <TripItem key={trip.id} trip={trip} />

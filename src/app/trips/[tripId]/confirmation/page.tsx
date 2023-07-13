@@ -1,9 +1,10 @@
 'use client'
 
+import { fadeIn } from '@/animation/variants'
 import Button from '@/app/components/Button'
 import { Trip } from '@prisma/client'
 import { loadStripe } from '@stripe/stripe-js'
-import { data } from 'autoprefixer'
+import { motion } from 'framer-motion'
 import { signIn, useSession } from 'next-auth/react'
 
 import Image from 'next/image'
@@ -26,8 +27,6 @@ export default function TripConfirmation({
   params,
   searchParams,
 }: TripConfirmationProps) {
-  // const trip = await prisma.trip.findUnique({ where: { id: params.tripId } })
-  // const trip = console.log(searchParams)
   const [trip, setTrip] = useState<Trip | null>(null)
   const [error, setError] = useState<any>('')
   const [totalPaid, setTotaPaid] = useState(0)
@@ -87,30 +86,30 @@ export default function TripConfirmation({
     if (!res.ok) {
       return toast.error('Ocorreu um erro!')
     }
-    // router.push('/')
-    toast.success('Reserva finalizada com sucesso!', {
-      position: 'bottom-center',
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: 'light',
-    })
     const { sessionId } = await res.json()
     const stripe = await loadStripe(
       process.env.NEXT_PUBLIC_STRIPE_KEY as string,
     )
     await stripe?.redirectToCheckout({ sessionId })
-    console.log(data)
   }
   return (
-    <div className="container flex w-full flex-1 flex-col gap-5 px-5 pt-28">
-      <h3 className="mb-5 text-lg font-semibold text-primaryDarker">
+    <motion.div className="container flex w-full flex-1 flex-col gap-5 px-5 pt-28">
+      <motion.h3
+        variants={fadeIn('up', 0.3)}
+        initial="hidden"
+        animate="show"
+        exit="hidden"
+        className="mb-5 text-lg font-semibold text-primaryDarker"
+      >
         Sua viagem
-      </h3>
-      <div className=" rounded-xl border border-[#BBBFBF] p-5">
+      </motion.h3>
+      <motion.div
+        variants={fadeIn('up', 0.4)}
+        initial="hidden"
+        animate="show"
+        exit="hidden"
+        className=" rounded-xl border border-[#BBBFBF] p-5"
+      >
         <div className="flex items-center gap-7 border-b border-b-[#BBBFBF] pb-5">
           <Image
             className="h-full min-h-[106px] w-full max-w-[124px] rounded-xl object-cover"
@@ -143,8 +142,14 @@ export default function TripConfirmation({
             </p>
           </div>
         </div>
-      </div>
-      <div className="flex flex-col gap-5">
+      </motion.div>
+      <motion.div
+        variants={fadeIn('up', 0.6)}
+        initial="hidden"
+        animate="show"
+        exit="hidden"
+        className="flex flex-col gap-5"
+      >
         <div>
           <p className="text-sm font-normal leading-relaxed text-primaryDarker">
             Data
@@ -174,7 +179,7 @@ export default function TripConfirmation({
         <Button onClick={handleBuyClick} variant="primary">
           Finalizar Compra
         </Button>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   )
 }

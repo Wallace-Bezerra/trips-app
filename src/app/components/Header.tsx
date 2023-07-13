@@ -35,7 +35,11 @@ export const Header = () => {
       )}
 
       {status === 'authenticated' && user && (
-        <div className="relative flex flex-row-reverse items-center gap-4">
+        <motion.div
+          className="relative flex flex-row-reverse items-center gap-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
           <AiOutlineMenu
             onClick={() => {
               setIsOpen((prev) => !prev)
@@ -74,10 +78,14 @@ export const Header = () => {
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
+        </motion.div>
       )}
 
-      {status === 'loading' && <div>Carregando</div>}
+      {status === 'loading' && (
+        <div className="h-[50px] w-[90px] animate-pulse rounded-2xl bg-gray-200 ">
+          <div className="h-[50px] w-[50px] rounded-full bg-gray-200"></div>
+        </div>
+      )}
     </header>
   )
 }
