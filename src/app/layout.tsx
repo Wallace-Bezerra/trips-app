@@ -16,16 +16,16 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-br">
-      <body
-        className={`${poppins.className} container relative mx-auto flex min-h-screen flex-col`}
-      >
-        <NextAuthProvider>
-          <ToastyProvider>
-            <Header />
-            {children}
-            <Footer />
-          </ToastyProvider>
-        </NextAuthProvider>
+      <body className="relative">
+        <div className={`${poppins.className} flex min-h-screen flex-col`}>
+          <NextAuthProvider>
+            <ToastyProvider>
+              <Header />
+              {children}
+              <Footer />
+            </ToastyProvider>
+          </NextAuthProvider>
+        </div>
       </body>
     </html>
   )

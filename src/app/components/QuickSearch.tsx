@@ -25,11 +25,17 @@ export const QuickSearch = () => {
         <ul className="mx-auto mb-2 mt-5 flex max-w-lg justify-between md:mt-7 ">
           <li className="flex cursor-pointer flex-col items-center gap-[5px]">
             <Link
-              className="flex flex-col items-center gap-[5px]"
+              className="flex flex-col items-center gap-[5px] "
               href={`/trips/search?destination=Hotel&startDate=&budget=`}
             >
-              <Image src="/hotel-icon.png" width={25} height={25} alt="Hotel" />
-              <p className="text-sm text-[#717171]">Hotéis</p>
+              <Image
+                className="sm:w-8"
+                src="/hotel-icon.png"
+                width={25}
+                height={25}
+                alt="Hotel"
+              />
+              <p className="text-sm text-[#717171] md:text-base">Hotéis</p>
             </Link>
           </li>
           <li className="flex cursor-pointer flex-col items-center gap-[5px]">
@@ -38,12 +44,13 @@ export const QuickSearch = () => {
               href={`/trips/search?destination=Fazenda&startDate=&budget=`}
             >
               <Image
+                className="sm:w-8"
                 src="/farm-icon.png"
                 width={25}
                 height={25}
                 alt="Fazenda"
               />
-              <p className="text-sm text-[#717171]">Fazenda</p>
+              <p className="text-sm text-[#717171] md:text-base">Fazenda</p>
             </Link>
           </li>
           <li className="flex cursor-pointer flex-col items-center gap-[5px]">
@@ -52,12 +59,13 @@ export const QuickSearch = () => {
               href={`/trips/search?destination=Chalé&startDate=&budget=`}
             >
               <Image
+                className="sm:w-8"
                 src="/cottage-icon.png"
                 width={25}
                 height={25}
                 alt="Chalé"
               />
-              <p className="text-sm text-[#717171]">Chalés</p>
+              <p className="text-sm text-[#717171] md:text-base">Chalés</p>
             </Link>
           </li>
           <li className="flex cursor-pointer flex-col items-center gap-[5px]">
@@ -65,8 +73,14 @@ export const QuickSearch = () => {
               className="flex flex-col items-center gap-[5px]"
               href={`/trips/search?destination=Pousada&startDate=&budget=`}
             >
-              <Image src="/inn-icon.png" width={25} height={25} alt="Pousada" />
-              <p className="text-sm text-[#717171]">Pousada</p>
+              <Image
+                className="sm:w-8"
+                src="/inn-icon.png"
+                width={25}
+                height={25}
+                alt="Pousada"
+              />
+              <p className="text-sm text-[#717171] md:text-base">Pousada</p>
             </Link>
           </li>
         </ul>

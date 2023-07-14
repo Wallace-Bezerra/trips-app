@@ -44,12 +44,21 @@ export default function MyTrips() {
     if (!response.ok) {
       return toast.error('Ocorreu um erro!')
     }
-    toast.success('Reserva Deletada com Sucesso!')
+    toast.success('Reserva Deletada com Sucesso!', {
+      position: 'bottom-center',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    })
     fetchReservations()
   }
 
   return (
-    <div className="container flex-1 px-5 pt-28">
+    <div className="container mx-auto mb-[160px] flex-1 px-5 pt-10 md:justify-center">
       <motion.h3
         variants={fadeIn('up', 0.4)}
         initial="hidden"
@@ -64,7 +73,7 @@ export default function MyTrips() {
         initial="hidden"
         animate="show"
         exit="hidden"
-        className="container flex flex-col gap-10 px-5 pb-10"
+        className="container flex flex-col gap-10 px-5 pb-10 md:flex-row "
       >
         {reservations?.length === 0 && (
           <div>Você não possui nenhuma reserva</div>
@@ -90,7 +99,7 @@ export default function MyTrips() {
                     <h2 className="text-base font-semibold text-primaryDarker">
                       {reservation.trip.name}
                     </h2>
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap items-center gap-2">
                       <ReactCountryFlag
                         countryCode={reservation.trip.countryCode}
                         svg

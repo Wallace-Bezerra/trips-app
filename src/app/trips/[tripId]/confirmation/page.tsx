@@ -93,7 +93,7 @@ export default function TripConfirmation({
     await stripe?.redirectToCheckout({ sessionId })
   }
   return (
-    <motion.div className="container flex w-full flex-1 flex-col gap-5 px-5 pt-28">
+    <motion.div className="container mx-auto mb-[160px] flex w-full max-w-lg flex-1 flex-col gap-5 px-5 pt-10">
       <motion.h3
         variants={fadeIn('up', 0.3)}
         initial="hidden"
@@ -123,7 +123,7 @@ export default function TripConfirmation({
             <h2 className="text-base font-semibold text-primaryDarker">
               {trip!.name}
             </h2>
-            <div className="flex gap-2">
+            <div className="flex items-center gap-2">
               <ReactCountryFlag countryCode={trip?.countryCode} svg />
               <p className="text-xs font-medium text-grayPrimary underline">
                 {trip?.location}

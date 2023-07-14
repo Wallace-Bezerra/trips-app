@@ -18,7 +18,6 @@ export async function POST(request: NextRequest) {
     )
   }
   const req = await request.json()
-  console.log(req)
   const {
     tripId,
     name,

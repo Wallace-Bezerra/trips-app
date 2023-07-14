@@ -4,7 +4,7 @@ import { TripSearch } from './components/TripSearch'
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center justify-between">
+    <main className="container mx-auto mb-[100px] flex flex-col items-center justify-between">
       <TripSearch />
       <QuickSearch />
       <RecommendedTrips />

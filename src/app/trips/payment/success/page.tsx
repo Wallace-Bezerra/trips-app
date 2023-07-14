@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const PaymentSuccess = () => {
   return (
-    <div className="container flex w-full flex-1 flex-col items-center justify-center gap-5 px-5 pt-28">
+    <div className="container mx-auto mb-[160px] flex w-full max-w-[1280px] flex-1 flex-col flex-wrap items-center justify-center gap-5 px-5 pt-10">
       <div className="flex max-w-max flex-col items-center gap-6  px-5">
         <h1 className="container text-center text-[30px] font-semibold text-primaryDarker">
           Reserva Realizada com Sucesso!

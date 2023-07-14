@@ -19,12 +19,20 @@ const getTrip = async (id: string) => {
 const TripDetails = async ({ params }: TripDetailProps) => {
   const trip = await getTrip(params.tripId)
   return (
-    <div className="container mx-auto flex w-full flex-col items-center justify-between pt-[106px]">
+    <div className="container mx-auto mb-[160px] flex w-full flex-col items-center justify-between">
       <TripHeader trip={trip} />
-      <TripReservation trip={trip} />
-      <TripDescription description={trip.description} />
-      <TripHighlights trip={trip} />
-      <TripLocation address={trip.location} description={trip.description} />
+      <div className="flex w-full flex-col lg:mt-10 lg:flex-row lg:justify-between lg:gap-4 lg:pr-5">
+        <TripReservation trip={trip} />
+        <div className="flex flex-col lg:w-[60%]">
+          <TripDescription description={trip.description} />
+          <TripHighlights trip={trip} />
+        </div>
+      </div>
+      <TripLocation
+        descriptionLocation={trip.descriptionLocation}
+        address={trip.location}
+        description={trip.description}
+      />
     </div>
   )
 }

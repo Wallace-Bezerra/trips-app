@@ -10,7 +10,7 @@ interface TripItemProps {
 }
 export const TripItem = ({ trip }: TripItemProps) => {
   return (
-    <Link href={`/trips/${trip.id}`}>
+    <Link className="h-full w-full" href={`/trips/${trip.id}`}>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

@@ -13,7 +13,7 @@ const containerStyle = {
   height: '100%',
 }
 
-function TripMap({ address }: TripMapProps) {
+const TripMap = ({ address }: TripMapProps) => {
   // eslint-disable-next-line no-undef
   const [center, setCenter] = useState<google.maps.LatLngLiteral | null>(null)
   const handleOpenGoogleMaps = () => {

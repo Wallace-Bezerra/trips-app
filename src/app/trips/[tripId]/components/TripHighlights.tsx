@@ -5,10 +5,10 @@ import React from 'react'
 export const TripHighlights = ({ trip }: { trip: Trip }) => {
   return (
     <div className="container mb-10 mt-5 w-full px-5 ">
-      <h3 className="mb-2 text-lg font-semibold text-primaryDarker">
+      <h3 className="mb-2 text-lg font-semibold text-primaryDarker lg:hidden">
         Destaques
       </h3>
-      <ul className="grid grid-flow-row-dense grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-[10px]">
+      <ul className="grid grid-flow-row-dense grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-[10px] lg:max-w-4xl">
         {trip.highlights.map((item) => {
           return (
             <li

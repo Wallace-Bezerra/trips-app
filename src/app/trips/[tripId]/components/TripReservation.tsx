@@ -56,7 +56,6 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
         message: 'Data final inválida!',
       })
     }
-    // router.push(`/trips/${trip.id}/confirmation`)
     router.push(
       `/trips/${trip.id}/confirmation?startDate=${data.startDate
         ?.toISOString()
@@ -69,8 +68,14 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="container mb-10 mt-5 w-full px-5 "
+      className="container mb-10 mt-5 w-full px-5 lg:order-2 lg:w-[400px] lg:self-start lg:rounded-lg lg:border lg:shadow-sm "
     >
+      <p className="hidden pb-5 pt-7 text-primaryDarker lg:inline-block">
+        <span className="text-xl font-semibold text-primaryDarker">
+          R$ {trip.pricePerDay.toString()}
+        </span>{' '}
+        / noite
+      </p>
       <div className="flex w-full flex-col gap-4">
         <div className="flex gap-4">
           <Controller
@@ -165,7 +170,7 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
             : '0'}
         </p>
       </div>
-      <div className="border-b pb-10">
+      <div className="border-b pb-10 lg:border-none">
         <Button variant="primary">Reservar agora</Button>
       </div>
     </form>
