@@ -28,7 +28,8 @@ export default function TripConfirmation({
   searchParams,
 }: TripConfirmationProps) {
   const [trip, setTrip] = useState<Trip | null>(null)
-  const [error, setError] = useState<any>('')
+  const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
   const [totalPaid, setTotaPaid] = useState(0)
   const { status } = useSession()
   const router = useRouter()
@@ -70,6 +71,7 @@ export default function TripConfirmation({
     )
   }
   const handleBuyClick = async () => {
+    setIsLoading(true)
     const res = await fetch('/api/payment', {
       method: 'POST',
       body: JSON.stringify({
@@ -91,6 +93,7 @@ export default function TripConfirmation({
       process.env.NEXT_PUBLIC_STRIPE_KEY as string,
     )
     await stripe?.redirectToCheckout({ sessionId })
+    setIsLoading(false)
   }
   return (
     <motion.div className="container mx-auto mb-[160px] flex w-full max-w-lg flex-1 flex-col gap-5 px-5 pt-10">
@@ -176,7 +179,11 @@ export default function TripConfirmation({
               : `${searchParams.guests}  hóspedes`}
           </span>
         </div>
-        <Button onClick={handleBuyClick} variant="primary">
+        <Button
+          isLoading={isLoading}
+          onClick={handleBuyClick}
+          variant="primary"
+        >
           Finalizar Compra
         </Button>
       </motion.div>

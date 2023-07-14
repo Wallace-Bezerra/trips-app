@@ -7,11 +7,14 @@ import { toast } from 'react-toastify'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import ReactCountryFlag from 'react-country-flag'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { fadeIn } from '@/animation/variants'
+import { ModalCancelled } from '../components/ModalCancelled'
 
 export default function MyTrips() {
   const { status, data } = useSession()
+  const [isOpenModalCancelled, setIsOpenModalCancelled] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [reservations, setReservations] = useState<
     (TripReservation & { trip: Trip })[] | null
   >(null)
@@ -23,6 +26,7 @@ export default function MyTrips() {
     const response = await fetch(`/api/user/${data?.user.id}/reservations`)
     const reservationData = await response.json()
     setReservations(reservationData)
+    setIsLoading(false)
   }
   const router = useRouter()
 
@@ -44,6 +48,7 @@ export default function MyTrips() {
     if (!response.ok) {
       return toast.error('Ocorreu um erro!')
     }
+    setIsOpenModalCancelled(false)
     toast.success('Reserva Deletada com Sucesso!', {
       position: 'bottom-center',
       autoClose: 5000,
@@ -58,13 +63,13 @@ export default function MyTrips() {
   }
 
   return (
-    <div className="container mx-auto mb-[160px] flex-1 px-5 pt-10 md:justify-center">
+    <div className="container mx-auto mb-[160px] flex flex-1 flex-col  px-5 pt-10 md:justify-center">
       <motion.h3
         variants={fadeIn('up', 0.4)}
         initial="hidden"
         animate="show"
         exit="hidden"
-        className="container mb-5 px-5 text-lg  font-semibold text-primaryDarker"
+        className="container mb-5 px-5 text-center text-lg  font-semibold text-primaryDarker"
       >
         Minhas Viagens
       </motion.h3>
@@ -73,17 +78,19 @@ export default function MyTrips() {
         initial="hidden"
         animate="show"
         exit="hidden"
-        className="container flex flex-col gap-10 px-5 pb-10 md:flex-row "
+        className="container flex flex-col flex-wrap content-center justify-center gap-10 px-5 pb-10 lg:flex-row "
       >
+        {isLoading && (
+          <div className="flex h-[500px] w-[380px] animate-pulse rounded-2xl bg-gray-200 "></div>
+        )}
         {reservations?.length === 0 && (
           <div>Você não possui nenhuma reserva</div>
         )}
         {reservations?.map((reservation) => {
-          console.log(reservation.trip)
           return (
             <div
               key={reservation.id}
-              className="flex w-full flex-1 flex-col gap-5 "
+              className="flex w-full max-w-[380px] flex-1 flex-col gap-5 "
             >
               <div className=" rounded-xl border border-[#BBBFBF] p-5">
                 <div className="flex items-center gap-7 border-b border-b-[#BBBFBF] pb-5">
@@ -158,11 +165,20 @@ export default function MyTrips() {
                     </p>
                   </div>
                   <Button
-                    onClick={() => handleDeleteReservation(reservation.id)}
+                    onClick={() => setIsOpenModalCancelled((prev) => !prev)}
                     variant="canceled"
                   >
                     Cancelar
                   </Button>
+                  <AnimatePresence>
+                    {isOpenModalCancelled && (
+                      <ModalCancelled
+                        handleDeleteReservation={handleDeleteReservation}
+                        setIsOpenModalCancelled={setIsOpenModalCancelled}
+                        reservationId={reservation.id}
+                      />
+                    )}
+                  </AnimatePresence>
                 </div>
               </div>
             </div>

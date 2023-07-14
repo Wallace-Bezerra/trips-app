@@ -6,7 +6,8 @@ import { useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+
+import { ModalUser } from './ModalUser'
 
 const handleLoginClick = () => {
   signIn()
@@ -17,7 +18,7 @@ const handleLogoutClick = () => {
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
   const { data, status } = useSession()
-  const router = useRouter()
+
   const user = data?.user
 
   return (
@@ -66,25 +67,10 @@ export const Header = () => {
               />
               <AnimatePresence>
                 {isOpen && (
-                  <motion.div
-                    className="absolute bottom-[-105px] right-0 flex h-[100px] w-[150px] flex-col items-start justify-between rounded-xl border border-solid border-[#BBBFBF] bg-[white] px-4 py-3 text-sm shadow-md"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                  >
-                    <button
-                      onClick={() => {
-                        setIsOpen(false)
-                        router.push('/my-trips')
-                      }}
-                    >
-                      Minhas Viagens
-                    </button>
-
-                    <button onClick={handleLogoutClick} className="self-end">
-                      Sair
-                    </button>
-                  </motion.div>
+                  <ModalUser
+                    setIsOpen={setIsOpen}
+                    handleLogoutClick={handleLogoutClick}
+                  />
                 )}
               </AnimatePresence>
             </motion.div>

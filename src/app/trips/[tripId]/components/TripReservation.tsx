@@ -1,4 +1,5 @@
 'use client'
+import { useState, useEffect } from 'react'
 import { Trip } from '@prisma/client'
 import Button from '@/app/components/Button'
 import DatePicker from '@/app/components/DatePicker'
@@ -20,15 +21,25 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
     watch,
     formState: { errors },
     setError,
+    reset,
   } = useForm<TripsReservationForm>()
   const startDate = watch('startDate')
   const endDate = watch('endDate')
   const date = new Date()
   const difference = differenceInDays(endDate!, startDate!)
-
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
+  useEffect(() => {
+    if (startDate! >= endDate!) {
+      reset({
+        endDate: undefined,
+      })
+    }
+  }, [startDate!, endDate!])
+
   const onSubmit = async (data: TripsReservationForm) => {
+    setIsLoading(true)
     const request = await fetch('/api/trips/check', {
       method: 'POST',
       body: JSON.stringify({
@@ -43,15 +54,19 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
       setError('startDate', {
         message: 'Essa Data está reservada!',
       })
+      setIsLoading(false)
       return setError('endDate', {
         message: 'Essa Data está reservada!',
       })
     }
-    if (error === 'INVALID_START_DATE')
+    if (error === 'INVALID_START_DATE') {
+      setIsLoading(false)
       return setError('startDate', {
         message: 'Data inicial inválida!',
       })
+    }
     if (error === 'INVALID_END_DATE') {
+      setIsLoading(false)
       return setError('endDate', {
         message: 'Data final inválida!',
       })
@@ -63,6 +78,10 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
         .trim()}&endDate=${data.endDate?.toISOString().trim()}&guests=${data.guests
       }`,
     )
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 600)
+    console.log(data)
   }
 
   return (
@@ -71,7 +90,7 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
       className="container mb-10 mt-5 w-full px-5 lg:order-2 lg:w-[400px] lg:self-start lg:rounded-lg lg:border lg:shadow-sm "
     >
       <p className="hidden pb-5 pt-7 text-primaryDarker lg:inline-block">
-        <span className="text-xl font-semibold text-primaryDarker">
+        <span className="text-xl font-semibold text-primaryLighter">
           R$ {trip.pricePerDay.toString()}
         </span>{' '}
         / noite
@@ -116,7 +135,14 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
               <DatePicker
                 selected={startDate! > endDate! ? null : field.value}
                 value={startDate! > endDate! ? '' : undefined}
-                onChange={field.onChange}
+                onChange={
+                  field.onChange
+                  // return startDate! > endDate!
+                  //   ? reset({
+                  //     endDate: null,
+                  //   })
+                  //   : field.onChange
+                }
                 onBlur={field.onBlur}
                 dateFormat="dd/MM/yyyy"
                 ref={field.ref}
@@ -171,7 +197,9 @@ export const TripReservation = ({ trip }: { trip: Trip }) => {
         </p>
       </div>
       <div className="border-b pb-10 lg:border-none">
-        <Button variant="primary">Reservar agora</Button>
+        <Button isLoading={isLoading} variant="primary">
+          Reservar agora
+        </Button>
       </div>
     </form>
   )

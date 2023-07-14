@@ -8,7 +8,6 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 })
 export async function POST(request: NextRequest) {
   const userSession = await getServerSession(authOptions)
-  console.log(userSession)
   if (!userSession?.user.id) {
     return new NextResponse(
       JSON.stringify({ error: { code: 'NOT_FOUND_USER_SESSION' } }),
@@ -28,6 +27,7 @@ export async function POST(request: NextRequest) {
     endDate,
     guests,
   } = req
+  console.log(coverImage)
   // criar checkout
   const session = await stripe.checkout.sessions.create({
     success_url: `${process.env.HOST_URL}/trips/payment/success`,

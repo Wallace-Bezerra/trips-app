@@ -10,7 +10,7 @@ interface TripItemProps {
 }
 export const TripItem = ({ trip }: TripItemProps) => {
   return (
-    <Link className="h-full w-full" href={`/trips/${trip.id}`}>
+    <Link className="h-full w-full md:max-w-[400px]" href={`/trips/${trip.id}`}>
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -34,15 +34,12 @@ export const TripItem = ({ trip }: TripItemProps) => {
               {trip.location}
             </p>
           </div>
-          <p className="text-sm font-normal text-grayPrimary">
-            {new Date(trip.startDate).toLocaleDateString()}
-          </p>
-          <p className="text-xs font-normal text-grayPrimary">
-            <span className="font-semibold text-primaryLighter">
+          <p className="flex items-center gap-2 text-xs font-normal text-grayPrimary">
+            <span className="text-lg font-semibold text-primaryLighter">
               R$
               {trip.pricePerDay.toString()}
             </span>{' '}
-            por noite
+            <span>por noite</span>
           </p>
         </div>
       </motion.div>

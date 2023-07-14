@@ -92,8 +92,8 @@ export const TripHeader = ({ trip }: { trip: Trip }) => {
             {trip.location}
           </p>
         </div>
-        <p className="text-xs font-normal text-grayPrimary lg:hidden">
-          <span className="font-semibold text-primaryLighter ">
+        <p className="flex items-center gap-2 text-xs font-normal text-grayPrimary lg:hidden">
+          <span className="text-lg font-semibold text-primaryLighter ">
             R$
             {trip.pricePerDay.toString()}
           </span>{' '}

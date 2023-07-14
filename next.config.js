@@ -8,6 +8,7 @@ const nextConfig = {
       'cf.bstatic.com',
       'a0.muscache.com',
       'www.trivago.com.br',
+      'media.hrs.com',
     ],
   },
 }
