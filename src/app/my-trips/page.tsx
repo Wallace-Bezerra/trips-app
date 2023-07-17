@@ -78,10 +78,10 @@ export default function MyTrips() {
         initial="hidden"
         animate="show"
         exit="hidden"
-        className="container flex flex-col flex-wrap content-center justify-center gap-10 px-5 pb-10 lg:flex-row "
+        className="container mx-auto grid grid-cols-[repeat(auto-fit,minmax(290px,1fr))] gap-10 px-5 pb-10 xl:max-w-[800px]"
       >
         {isLoading && (
-          <div className="flex h-[500px] w-[380px] animate-pulse rounded-2xl bg-gray-200 px-5"></div>
+          <div className="mx-auto flex h-[500px] w-[380px] animate-pulse rounded-2xl bg-gray-200 px-5"></div>
         )}
         {reservations?.length === 0 && (
           <div>Você não possui nenhuma reserva</div>
@@ -90,7 +90,7 @@ export default function MyTrips() {
           return (
             <div
               key={reservation.id}
-              className="flex w-full max-w-[380px] flex-1 flex-col gap-5 "
+              className="flex w-full flex-1 flex-col gap-5 "
             >
               <div className=" rounded-xl border border-[#BBBFBF] p-5">
                 <div className="flex flex-wrap items-center gap-7 border-b border-b-[#BBBFBF] pb-5 xl:flex-nowrap">
