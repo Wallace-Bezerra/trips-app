@@ -4,11 +4,17 @@ import React from 'react'
 
 export const Footer = () => {
   return (
-    <footer className="absolute bottom-0 flex w-full flex-col items-center justify-center gap-2 bg-walterWhite py-5">
+    <footer className="absolute bottom-0 flex h-20 w-full flex-col items-center justify-center gap-2 bg-walterWhite py-5 md:h-24">
       <Link href="/">
-        <Image src="/Logo.svg" alt="Full Stack Week" width={183} height={32} />
+        <Image
+          src="/Logo.svg"
+          className="w-28 sm:w-40"
+          alt="Full Stack Week"
+          width={183}
+          height={32}
+        />
       </Link>
-      <p>Todos os direitos reservados.</p>
+      <p className="text-xs sm:text-sm">Todos os direitos reservados.</p>
     </footer>
   )
 }

@@ -27,6 +27,9 @@
   position:absolute;
  
 }
+.react-datepicker__header{
+  @apply bg-purple-200
+}
 .swiper-button-prev:after{
   left: calc(32%)
 }

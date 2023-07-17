@@ -63,7 +63,7 @@ export default function MyTrips() {
   }
 
   return (
-    <div className="container mx-auto mb-[160px] flex flex-1 flex-col  px-5 pt-10 md:justify-center">
+    <div className="container mx-auto mb-[160px] flex flex-1 flex-col px-5 pt-10 md:justify-center">
       <motion.h3
         variants={fadeIn('up', 0.4)}
         initial="hidden"
@@ -81,7 +81,7 @@ export default function MyTrips() {
         className="container flex flex-col flex-wrap content-center justify-center gap-10 px-5 pb-10 lg:flex-row "
       >
         {isLoading && (
-          <div className="flex h-[500px] w-[380px] animate-pulse rounded-2xl bg-gray-200 "></div>
+          <div className="flex h-[500px] w-[380px] animate-pulse rounded-2xl bg-gray-200 px-5"></div>
         )}
         {reservations?.length === 0 && (
           <div>Você não possui nenhuma reserva</div>
@@ -93,16 +93,16 @@ export default function MyTrips() {
               className="flex w-full max-w-[380px] flex-1 flex-col gap-5 "
             >
               <div className=" rounded-xl border border-[#BBBFBF] p-5">
-                <div className="flex items-center gap-7 border-b border-b-[#BBBFBF] pb-5">
+                <div className="flex flex-wrap items-center gap-7 border-b border-b-[#BBBFBF] pb-5 xl:flex-nowrap">
                   <Image
-                    className="h-full min-h-[106px] w-full max-w-[124px] rounded-xl object-cover"
+                    className="h-full min-h-[106px] w-full rounded-xl object-cover md:max-w-[124px]"
                     width={500}
                     height={500}
                     quality={100}
                     alt=""
                     src={reservation.trip.coverImage}
                   />
-                  <div className="flex flex-col items-start gap-2">
+                  <div className="flex w-full max-w-[250px] flex-col items-start gap-2">
                     <h2 className="text-base font-semibold text-primaryDarker">
                       {reservation.trip.name}
                     </h2>

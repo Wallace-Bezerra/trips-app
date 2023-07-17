@@ -22,11 +22,12 @@ export const Header = () => {
   const user = data?.user
 
   return (
-    <header className="sticky top-0 z-10  flex h-[106px] items-center border-b border-gray-200 bg-white px-5 py-7">
+    <header className="sticky top-0 z-10 flex h-[70px] items-center border-b border-gray-200 bg-white px-5 py-7 sm:h-[106px]">
       <div className="container mx-auto flex w-full items-center justify-between">
         <Link href="/">
           <Image
             src="/Logo.svg"
+            className="w-40 sm:w-[180px]"
             alt="Full Stack Week"
             width={183}
             height={32}
